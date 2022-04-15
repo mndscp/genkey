@@ -96,9 +96,9 @@ func main() {
 
 			var sorted []x
 
-			for k, v := range Layouts {
-				sorted = append(sorted, x{k, Score(v)})
-			}
+			// for k, v := range Layouts {
+			// 	sorted = append(sorted, x{k, Score(v)})
+			// }
 
 			sort.Slice(sorted, func(i, j int) bool {
 				return sorted[i].score < sorted[j].score

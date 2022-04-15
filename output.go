@@ -41,12 +41,13 @@ func PrintAnalysis(l Layout) {
 	ftotal := float64(ftri.Total)
 	leftrolls := 100*float64(ftri.LeftInwardRolls)/ftotal + 100*float64(ftri.LeftOutwardRolls)/ftotal
 	rightrolls := 100*float64(ftri.RightInwardRolls)/ftotal + 100*float64(ftri.RightOutwardRolls)/ftotal
-	fmt.Printf("Rolls (l): %.2f%%\n", leftrolls)
-	fmt.Printf("\tInward: ~%.2f%%\n", 100*float64(ftri.LeftInwardRolls)/ftotal)
-	fmt.Printf("\tOutward: ~%.2f%%\n", 100*float64(ftri.LeftOutwardRolls)/ftotal)
-	fmt.Printf("Rolls (r): %.2f%%\n", rightrolls)
-	fmt.Printf("\tInward: ~%.2f%%\n", 100*float64(ftri.RightInwardRolls)/ftotal)
-	fmt.Printf("\tOutward: ~%.2f%%\n", 100*float64(ftri.RightOutwardRolls)/ftotal)
+	fmt.Printf("Rolls: %.2f%%\n", rightrolls + leftrolls)
+	// fmt.Printf("Rolls (l): %.2f%%\n", leftrolls)
+	// fmt.Printf("\tInward: ~%.2f%%\n", 100*float64(ftri.LeftInwardRolls)/ftotal)
+	// fmt.Printf("\tOutward: ~%.2f%%\n", 100*float64(ftri.LeftOutwardRolls)/ftotal)
+	// fmt.Printf("Rolls (r): %.2f%%\n", rightrolls)
+	// fmt.Printf("\tInward: ~%.2f%%\n", 100*float64(ftri.RightInwardRolls)/ftotal)
+	// fmt.Printf("\tOutward: ~%.2f%%\n", 100*float64(ftri.RightOutwardRolls)/ftotal)
 	fmt.Printf("Alternates: ~%.2f%%\n", 100*float64(ftri.Alternates)/ftotal)
 	fmt.Printf("Onehands: ~%.2f%%\n", 100*float64(ftri.Onehands)/ftotal)
 	fmt.Printf("Redirects: ~%.2f%%\n", 100*float64(ftri.Redirects)/ftotal)
@@ -60,30 +61,30 @@ func PrintAnalysis(l Layout) {
 		weighted = FingerSpeed(&l, true)
 		unweighted = FingerSpeed(&l, false)
 	}
-	var highestUnweightedFinger string
+	// var highestUnweightedFinger string
 	var highestUnweighted float64
 	var utotal float64
 
-	var highestWeightedFinger string
+	// var highestWeightedFinger string
 	var highestWeighted float64
 	var wtotal float64
 	for i := 0; i < 8; i++ {
 		utotal += unweighted[i]
 		if unweighted[i] > highestUnweighted {
 			highestUnweighted = unweighted[i]
-			highestUnweightedFinger = FingerNames[i]
+			// highestUnweightedFinger = FingerNames[i]
 		}
 
 		wtotal += weighted[i]
 		if weighted[i] > highestWeighted {
 			highestWeighted = weighted[i]
-			highestWeightedFinger = FingerNames[i]
+			// highestWeightedFinger = FingerNames[i]
 		}
 	}
-	fmt.Printf("Finger Speed (weighted): %.2f\n", weighted)
-	fmt.Printf("Finger Speed (unweighted): %.2f\n", unweighted)
-	fmt.Printf("Highest Speed (weighted): %.2f (%s)\n", highestWeighted, highestWeightedFinger)
-	fmt.Printf("Highest Speed (unweighted): %.2f (%s)\n", highestUnweighted, highestUnweightedFinger)
+	// fmt.Printf("Finger Speed (weighted): %.2f\n", weighted)
+	// fmt.Printf("Finger Speed (unweighted): %.2f\n", unweighted)
+	// fmt.Printf("Highest Speed (weighted): %.2f (%s)\n", highestWeighted, highestWeightedFinger)
+	// fmt.Printf("Highest Speed (unweighted): %.2f (%s)\n", highestUnweighted, highestUnweightedFinger)
 	left, right := IndexUsage(l)
 	fmt.Printf("Index Usage: %.1f%% %.1f%%\n", left, right)
 	var sfb float64
@@ -99,7 +100,7 @@ func PrintAnalysis(l Layout) {
 		SortFreqList(sfbs)
 
 		fmt.Println("Top SFBs:")
-		PrintFreqList(sfbs, 8, true)
+		PrintFreqList(sfbs, 12, true)
 	} else {
 		sfb = DynamicSFBs(l)
 		escaped, real := ListDynamic(l)
@@ -109,12 +110,12 @@ func PrintAnalysis(l Layout) {
 		PrintFreqList(escaped, 30, true)
 	}
 
-	if !DynamicFlag {
-		bigrams := ListWorstBigrams(l)
-		SortFreqList(bigrams)
-		fmt.Println("Worst Bigrams:")
-		PrintFreqList(bigrams, 8, false)
-	}
+	// if !DynamicFlag {
+	// 	bigrams := ListWorstBigrams(l)
+	// 	SortFreqList(bigrams)
+	// 	fmt.Println("Worst Bigrams:")
+	// 	PrintFreqList(bigrams, 8, false)
+	// }
 
 	fmt.Printf("Score: %.2f\n", Score(l))
 	fmt.Println()
